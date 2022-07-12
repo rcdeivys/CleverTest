@@ -1,43 +1,80 @@
 package com.rcdeivys.clevertest.ui.home.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.rcdeivys.clevertest.activities.MainActivity
+import com.rcdeivys.clevertest.common.collectFlow
 import com.rcdeivys.clevertest.databinding.FragmentHomeBinding
+import com.rcdeivys.clevertest.models.Result
+import com.rcdeivys.clevertest.ui.home.actions.HomeActions
+import com.rcdeivys.clevertest.ui.home.adapters.CharactersAdapter
 import com.rcdeivys.clevertest.ui.home.viewmodels.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private lateinit var binding: FragmentHomeBinding
+    private val viewModel: HomeViewModel by viewModel()
+    private var listener: HomeFragmentListener? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var charactersAdapter: CharactersAdapter
+    private var allCharacters = mutableListOf<Result>()
+
+    private val baseActivity by lazy {
+        requireActivity() as MainActivity
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        binding = FragmentHomeBinding.inflate(inflater)
+        setupAdapter()
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        lifecycleScope.collectFlow(viewModel.getAction()) {
+            when (it) {
+                is HomeActions.SetCharacters -> setCharacters(it.characters)
+                // is HomeActions.ShowMessageText -> showToastShort(requireContext(), it.message)
+                // is HomeActions.SetShowProgress -> showLoading(it.isVisible)
+                else -> {}
+            }
         }
-        return root
+
+        viewModel.getCharacter()
+
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setCharacters(characters: List<Result>) {
+        allCharacters.clear()
+        allCharacters.addAll(characters)
+        charactersAdapter.notifyDataSetChanged()
+    }
+
+    private fun setupAdapter() {
+        charactersAdapter = CharactersAdapter(allCharacters) { character ->
+            listener?.launchDetails(character)
+        }
+        binding.recyclerViewCharacters.adapter = charactersAdapter
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? HomeFragmentListener
+    }
+
+    override fun onDetach() {
+        listener = null
+        super.onDetach()
+    }
+
+    interface HomeFragmentListener {
+        fun launchDetails(character: Result)
     }
 }

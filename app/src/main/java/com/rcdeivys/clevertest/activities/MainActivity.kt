@@ -8,8 +8,11 @@ import androidx.navigation.fragment.NavHostFragment
 import com.rcdeivys.clevertest.R
 import com.rcdeivys.clevertest.common.show
 import com.rcdeivys.clevertest.databinding.ActivityMainBinding
+import com.rcdeivys.clevertest.models.Result
+import com.rcdeivys.clevertest.ui.home.fragments.HomeFragment
+import com.rcdeivys.clevertest.ui.home.fragments.HomeFragmentDirections
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HomeFragment.HomeFragmentListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
@@ -36,5 +39,10 @@ class MainActivity : AppCompatActivity() {
 
     fun showLoading(show: Boolean) {
         binding.layoutProgress.show(show)
+    }
+
+    override fun launchDetails(character: Result) {
+        val action = HomeFragmentDirections.actionToDetailFragment(character)
+        navController.navigate(action)
     }
 }

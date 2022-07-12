@@ -8,7 +8,19 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.rcdeivys.clevertest.ui.home.fragments.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.rcdeivys.clevertest.ui.details.fragments.DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="Character"
+            app:argType="com.rcdeivys.clevertest.models.Result" />
+    </fragment>
 
 </navigation>

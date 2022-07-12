@@ -1,4 +1,6 @@
 package com.rcdeivys.clevertest.ui.details.viewmodels
 
-class DetailsViewModels {
+import androidx.lifecycle.ViewModel
+
+class DetailsViewModels: ViewModel()  {
 }

@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Proyectos/Android/CleverTest/app/src/main/res/drawable/character_item_view.xml" value="0.298" />
         <entry key="..\:/Proyectos/Android/CleverTest/app/src/main/res/layout/activity_main.xml" value="0.35052083333333334" />
+        <entry key="..\:/Proyectos/Android/CleverTest/app/src/main/res/layout/character_item_view.xml" value="0.3494791666666667" />
+        <entry key="..\:/Proyectos/Android/CleverTest/app/src/main/res/layout/fragment_detail.xml" value="0.35052083333333334" />
+        <entry key="..\:/Proyectos/Android/CleverTest/app/src/main/res/layout/fragment_home.xml" value="0.35052083333333334" />
         <entry key="..\:/Proyectos/Android/CleverTest/app/src/main/res/menu/bottom_nav_menu.xml" value="0.35052083333333334" />
       </map>
     </option>
