@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">CleverTest</string>
 
-    <string name="character_first_seen_in">First seen in:</string>
+    <string name="character_first_seen_in">First seen in</string>
     <string name="character_last_known_location">Location:</string>
     <string name="character_gender">Gender:</string>
     <string name="character_origin">Origin:</string>
     <string name="unknown">Unknown</string>
+    <string name="character_episode_name">Episode name:</string>
+    <string name="character_air_date">Air date:</string>
+    <string name="character_episode">Episode:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="residents">Residents</string>
 </resources>

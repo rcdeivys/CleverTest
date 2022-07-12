@@ -1,4 +1,4 @@
-package com.rcdeivys.clevertest.ui.home.viewmodels
+package com.rcdeivys.clevertest.ui.locations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel constructor(
+class LocationsViewModel constructor(
     private val repository: CleverRepository
 ) : ViewModel() {
 
@@ -19,39 +19,39 @@ class HomeViewModel constructor(
     private var totalPages = 1
     private var page = 2
 
-    fun getCharacter() {
+    fun getLocations() {
         viewModelScope.launch {
             action.value = HomeActions.SetShowProgress(true)
-            repository.getCharacter().collect { response ->
+            repository.getLocations().collect { response ->
                 if (response.isSuccessful) {
-                    response.body()?.let { charactersResponse ->
-                        totalPages = charactersResponse.info?.pages ?: 0
-                        charactersResponse.results?.let {
-                            action.value = HomeActions.SetCharacters(it)
+                    response.body()?.let { locationsResponse ->
+                        totalPages = locationsResponse.info?.pages ?: 0
+                        locationsResponse.results?.let {
+                            action.value = HomeActions.SetLocations(it)
                             action.value = HomeActions.SetShowProgress(false)
                         }
                     }
                 } else {
                     action.value = HomeActions.SetShowProgress(false)
-                    action.value = HomeActions.ShowMessageText("Error getting characters")
+                    action.value = HomeActions.ShowMessageText("Error getting locations")
                 }
             }
         }
     }
 
-    fun getCharacterPaginated() {
+    fun getLocationsPaginated() {
         if (page < totalPages) {
             viewModelScope.launch {
-                repository.getCharacterPaginated(page).collect { response ->
+                repository.getLocationsPaginated(page).collect { response ->
                     if (response.isSuccessful) {
                         page++
-                        response.body()?.let { charactersResponse ->
-                            charactersResponse.results?.let {
-                                action.value = HomeActions.UpdateCharacters(it)
+                        response.body()?.let { locationsResponse ->
+                            locationsResponse.results?.let {
+                                action.value = HomeActions.UpdateLocations(it)
                             }
                         }
                     } else {
-                        logError("Error getting characters")
+                        logError("Error getting locations")
                     }
                 }
             }

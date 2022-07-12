@@ -1,6 +1,5 @@
 package com.rcdeivys.clevertest.models
 
-
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -28,5 +27,17 @@ data class Result(
     @SerializedName("url")
     val url: String? = null,
     @SerializedName("created")
-    val created: String? = null
-): Serializable
+    val created: String? = null,
+    @SerializedName("dimension")
+    val dimension: String? = null,
+    @SerializedName("residents")
+    val residents: List<String>? = null
+) : Serializable {
+
+    fun getFirstSeen() = if (episode.isNullOrEmpty().not()) {
+        episode?.get(0)?.replace("https://rickandmortyapi.com/api/episode/".toRegex(), "")
+            .toString()
+    } else {
+        "Unknown"
+    }
+}

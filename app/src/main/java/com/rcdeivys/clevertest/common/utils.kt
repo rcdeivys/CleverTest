@@ -7,6 +7,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.rcdeivys.clevertest.R
@@ -81,3 +83,21 @@ fun logError(message: String) {
 }
 
 fun String?.orUnknown(context: Context) = this ?: context.getString(R.string.unknown)
+
+fun String.getIdResident() =
+    this.replace("https://rickandmortyapi.com/api/character/".toRegex(), "")
+
+fun RecyclerView.isLastItemDisplaying(): Boolean {
+    if (this.adapter?.itemCount != 0) {
+        val lastVisibleItemPosition =
+            (this.layoutManager as LinearLayoutManager?)?.findLastCompletelyVisibleItemPosition()
+        if (
+            lastVisibleItemPosition != RecyclerView.NO_POSITION &&
+            lastVisibleItemPosition == (this.adapter?.itemCount ?: 0) - 3
+        )
+            return true
+    }
+    return false
+}
+
+

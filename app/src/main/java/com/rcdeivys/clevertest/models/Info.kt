@@ -1,6 +1,5 @@
 package com.rcdeivys.clevertest.models
 
-
 import com.google.gson.annotations.SerializedName
 
 data class Info(
@@ -11,5 +10,5 @@ data class Info(
     @SerializedName("next")
     val next: String? = null,
     @SerializedName("prev")
-    val prev: Any? = null
+    val prev: String? = null
 )

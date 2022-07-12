@@ -3,19 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/fragment_home">
+
+    <action
+        android:id="@+id/action_to_homeFragment"
+        app:destination="@id/fragment_home" />
+
+    <action
+        android:id="@+id/action_to_locationsFragment"
+        app:destination="@id/fragment_locations" />
+
+    <action
+        android:id="@+id/action_to_detailFragment"
+        app:destination="@id/fragment_detail" />
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/fragment_home"
         android:name="com.rcdeivys.clevertest.ui.home.fragments.HomeFragment"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/detailFragment"
+        android:id="@+id/fragment_detail"
         android:name="com.rcdeivys.clevertest.ui.details.fragments.DetailFragment"
         tools:layout="@layout/fragment_detail">
         <argument
@@ -23,4 +31,22 @@
             app:argType="com.rcdeivys.clevertest.models.Result" />
     </fragment>
 
+    <fragment
+        android:id="@+id/fragment_locations"
+        android:name="com.rcdeivys.clevertest.ui.locations.LocationsFragment"
+        android:label="fragment_locations"
+        tools:layout="@layout/fragment_locations">
+        <action
+            android:id="@+id/action_to_locationsDetailsFragment"
+            app:destination="@id/fragment_locations_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_locations_details"
+        android:name="com.rcdeivys.clevertest.ui.locationsdetails.LocationsDetailsFragment"
+        android:label="fragment_locations_details"
+        tools:layout="@layout/fragment_locations_details">
+        <argument
+            android:name="Location"
+            app:argType="com.rcdeivys.clevertest.models.Result" />
+    </fragment>
 </navigation>
